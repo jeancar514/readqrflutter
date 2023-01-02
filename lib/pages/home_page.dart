@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:readcodigoqr/pages/mapas_page.dart';
+import '../widget/qr._read.dart';
 import 'direcciones_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -9,12 +10,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int currentIndex = 0;
+  bool readQr = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _crearAppBar(),
-      body: _callPage(currentIndex),
+      body: (readQr == true) ? QrRead() : _callPage(currentIndex),
       bottomNavigationBar: _crearBottomNavigationBar(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: _crearBoton(context),
@@ -27,6 +29,7 @@ class _HomePageState extends State<HomePage> {
       onTap: (index) {
         setState(() {
           currentIndex = index;
+          readQr = false;
         });
       },
       items: [
@@ -56,7 +59,7 @@ class _HomePageState extends State<HomePage> {
   Widget _crearBoton(BuildContext context) {
     return FloatingActionButton(
       child: Icon(Icons.filter_center_focus),
-      onPressed: () {},
+      onPressed: _scanQR,
       backgroundColor: Theme.of(context).primaryColor,
     );
   }
@@ -73,15 +76,10 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _scanQR() async {
-    String futureString = '';
-    try {} catch (e) {
-      String futureString = e.toString();
-    }
-
-    print('Future String $futureString ');
-    if (futureString != null) {
-      print('tenemos informacion');
-    }
+  void _scanQR() {
+    print('scan');
+    setState(() {
+      readQr = true;
+    });
   }
 }
