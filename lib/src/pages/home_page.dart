@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:readcodigoqr/pages/mapas_page.dart';
+import 'package:readcodigoqr/src/pages/mapas_page.dart';
 import '../widget/qr._read.dart';
 import 'direcciones_page.dart';
 
