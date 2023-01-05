@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:readcodigoqr/src/bloc/scans_bloc.dart';
 import 'package:readcodigoqr/src/pages/mapas_page.dart';
-import '../widget/qr._read.dart';
 import 'direcciones_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,7 +16,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _crearAppBar(),
-      body: (readQr == true) ? QrRead() : _callPage(currentIndex),
+      body: _callPage(currentIndex),
       bottomNavigationBar: _crearBottomNavigationBar(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: _crearBoton(context),
@@ -70,16 +70,17 @@ class _HomePageState extends State<HomePage> {
         child: Text('QA scanner'),
       ),
       actions: <Widget>[
-        IconButton(onPressed: () {}, icon: Icon(Icons.delete_forever))
+        IconButton(
+            onPressed: () {
+              scanBloc.borrarScanTodos();
+            },
+            icon: Icon(Icons.delete_forever))
       ],
       backgroundColor: Theme.of(context).primaryColor,
     );
   }
 
   void _scanQR() {
-    print('scan');
-    setState(() {
-      readQr = true;
-    });
+    Navigator.pushNamed(context, 'qr');
   }
 }

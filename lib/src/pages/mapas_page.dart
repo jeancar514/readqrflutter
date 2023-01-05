@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:readcodigoqr/src/models/scan_model.dart';
 import 'package:readcodigoqr/src/provider/db_provider.dart';
 
+import '../bloc/scans_bloc.dart';
+import '../utils/utils.dart' as utils;
+
 class MapasPage extends StatelessWidget {
+  final scansBloc = new ScansBloc();
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<ScanModel>?>(
-      future: DBProvider.db.getTodosScans(),
+    return StreamBuilder<List<ScanModel>?>(
+      stream: scansBloc.scansStream,
       builder:
           (BuildContext context, AsyncSnapshot<List<ScanModel>?> snapshot) {
+        print(snapshot.data?.length);
         if (!snapshot.hasData) {
           return Center(
             child: CircularProgressIndicator(),
@@ -25,11 +29,14 @@ class MapasPage extends StatelessWidget {
           itemCount: scans?.length,
           itemBuilder: (context, i) => Dismissible(
             key: UniqueKey(),
-            onDismissed: (direccion) => DBProvider.db.deleteScan(scans[i].id),
+            onDismissed: (direccion) => scansBloc.borrarScan(scans[i].id),
             background: Container(
               color: Color.fromARGB(255, 175, 146, 255),
             ),
             child: ListTile(
+              onTap: () {
+                utils.abrirScan(context, scans[i]);
+              },
               leading: Icon(
                 Icons.cloud_queue,
                 color: Theme.of(context).primaryColor,
