@@ -29,13 +29,13 @@ class MapasPage extends StatelessWidget {
           itemCount: scans?.length,
           itemBuilder: (context, i) => Dismissible(
             key: UniqueKey(),
-            onDismissed: (direccion) => scansBloc.borrarScan(scans[i].id),
+            onDismissed: (direccion) => scansBloc.borrarScan(scans![i].id),
             background: Container(
               color: Color.fromARGB(255, 175, 146, 255),
             ),
             child: ListTile(
               onTap: () {
-                utils.abrirScan(context, scans[i]);
+                utils.abrirScan(context, scans![i]);
               },
               leading: Icon(
                 Icons.cloud_queue,
