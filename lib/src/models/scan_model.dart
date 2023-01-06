@@ -39,11 +39,11 @@ class ScanModel {
         "valor": valor,
       };
 
-  LatLng? getLatLong() {
+  LatLng getLatLong() {
     final lalo = valor?.substring(4).split(',');
     final lat = double.parse(lalo![0]);
     final lng = double.parse(lalo[2]);
-    LatLng? coord = new LatLng(lat, lng);
+    LatLng coord = new LatLng(lat, lng);
 
     return coord;
   }

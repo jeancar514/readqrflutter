@@ -1,10 +1,11 @@
 import 'dart:async';
 
+import 'package:readcodigoqr/src/bloc/validator.dart';
 import 'package:readcodigoqr/src/models/scan_model.dart';
 
 import '../provider/db_provider.dart';
 
-class ScansBloc {
+class ScansBloc with Validators {
   static final ScansBloc _singleton = ScansBloc._internal();
 
   factory ScansBloc() {
@@ -18,7 +19,10 @@ class ScansBloc {
 
   final _scansController = StreamController<List<ScanModel>?>.broadcast();
 
-  Stream<List<ScanModel>?> get scansStream => _scansController.stream;
+  Stream<List<ScanModel>?> get scansStream =>
+      _scansController.stream.transform(validarGeo);
+  Stream<List<ScanModel>?> get scansStreamHttp =>
+      _scansController.stream.transform(validarHttp);
 
   //----- Metodos -----//
 
